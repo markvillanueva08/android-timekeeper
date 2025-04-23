@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Alert, TextInput, View } from 'react-native';
+import { StyleSheet, Alert, TextInput, View, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import * as Print from 'expo-print';
 import * as Sharing from 'expo-sharing';
@@ -305,7 +305,7 @@ export default function TimekeeperScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.scrollView}>
         {/* Service Details */}
         <View style={styles.serviceInfoContainer}>
@@ -394,7 +394,6 @@ export default function TimekeeperScreen() {
             <ThemedText style={styles.emptyText}>No sessions in queue</ThemedText>
           ) : (
             <DraggableFlatList
-        onDragEnd={onDragEnd}
               data={pendingSessions}
               renderItem={({ item, drag }) => (
                 <View key={item.id} style={styles.historyItem}>
@@ -473,16 +472,16 @@ export default function TimekeeperScreen() {
         </TouchableOpacity>
 
       </View>
-    </ThemedView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
   },
   scrollView: {
+    padding: 20,
     flex: 1,
   },
   scrollContent: {
