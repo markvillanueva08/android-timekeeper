@@ -305,9 +305,14 @@ export default function TimekeeperScreen() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.scrollView}>
+    <ThemedView style={styles.container}>
+      <ScrollView 
+        style={styles.scrollView} 
+        contentContainerStyle={styles.scrollContent}
+        nestedScrollEnabled={true}
+      >
         {/* Service Details */}
+      
         <View style={styles.serviceInfoContainer}>
           <ThemedText style={styles.title}>{params.serviceType}</ThemedText>
           <ThemedText style={styles.serviceInfo}>Pastor: {params.pastorName}</ThemedText>
@@ -393,6 +398,7 @@ export default function TimekeeperScreen() {
           {pendingSessions.length === 0 ? (
             <ThemedText style={styles.emptyText}>No sessions in queue</ThemedText>
           ) : (
+            <View style={{flex: 1}}>
             <DraggableFlatList
               data={pendingSessions}
               renderItem={({ item, drag }) => (
@@ -414,7 +420,10 @@ export default function TimekeeperScreen() {
                 </View>
               )}
               keyExtractor={(item) => item.id}
+              onDragEnd={onDragEnd}
+              contentContainerStyle={{flexGrow: 1}}
             />
+          </View>
           )}
         </View>
 
@@ -470,16 +479,15 @@ export default function TimekeeperScreen() {
         <TouchableOpacity style={styles.exportButton} onPress={generatePdf}>
           <ThemedText style={styles.buttonText}>Generate PDF Report</ThemedText>
         </TouchableOpacity>
-
-      </View>
-    </ScrollView>
+        </ScrollView >
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
+   },
   scrollView: {
     padding: 20,
     flex: 1,
